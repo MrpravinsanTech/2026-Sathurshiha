@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Pondaaatii 💙</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;600&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        /* --- 1. ROYAL NAVY & GOLD THEME --- */
+        :root {
+            --bg-color: #050a14;
+            --card-bg: #0a192f;
+            --accent-blue: #00f3ff;
+            --gold: #ffd700;
+            --rose: #ff0055;
+            --text: #e6f1ff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            padding-bottom: 100px; /* Space for music player */
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: var(--accent-blue); border-radius: 4px; }
+
+        /* --- 2. ROSE PETAL RAIN --- */
+        #petals-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1; overflow: hidden;
+        }
+        .petal {
+            position: absolute; background: rgba(255, 0, 85, 0.6);
+            border-radius: 150% 0 150% 0; animation: fall linear infinite;
+        }
+        @keyframes fall {
+            to { transform: translateY(100vh) rotate(720deg); }
+        }
+
+        /* --- 3. COMMON SECTION STYLES --- */
+        section {
+            min-height: 100vh;
+            padding: 60px 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            border-bottom: 1px solid rgba(0, 243, 255, 0.1);
+        }
+        .title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: var(--gold);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .subtitle {
+            color: var(--accent-blue);
+            font-size: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        /* --- PAGE 1: CHAT --- */
+        #page1 { background: #000; }
+        .chat-box {
+            width: 100%; max-width: 400px; background: #0b141a;
+            border-radius: 20px; overflow: hidden; border: 1px solid #333;
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.1);
+        }
+        .chat-header { background: #202c33; padding: 15px; display: flex; align-items: center; gap: 15px; }
+        .chat-dp { width: 45px; height: 45px; border-radius: 50%; background: url('1.jpg'); background-size: cover; border: 2px solid var(--gold); }
+        .chat-body { height: 350px; padding: 20px; overflow-y: auto; background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png'); opacity: 0.9; }
+        .msg { background: #202c33; padding: 10px 15px; border-radius: 10px; margin-bottom: 10px; max-width: 80%; opacity: 0; transform: translateY(20px); transition: 0.5s; font-size: 0.9rem; }
+        .msg.visible { opacity: 1; transform: translateY(0); }
+        .typing { color: var(--accent-blue); font-size: 0.8rem; display: none; margin-bottom: 10px; font-style: italic; }
+
+        /* --- PAGE 2: HEART CANVAS --- */
+        #page2 { position: relative; overflow: hidden; }
+        #heart-canvas { position: absolute; top: 0; left: 0; }
+        .heart-text { position: absolute; z-index: 10; text-align: center; pointer-events: none; width: 100%; }
+        .glow-text { font-size: 3rem; color: white; text-shadow: 0 0 20px var(--accent-blue); font-family: 'Dancing Script'; }
+
+        /* --- TIMELINE --- */
+        .timeline { border-left: 3px solid var(--gold); padding-left: 30px; margin: 20px; }
+        .event { margin-bottom: 40px; position: relative; }
+        .event::before { content: '❤'; position: absolute; left: -41px; top: 0; background: var(--bg-color); color: var(--rose); font-size: 1.5rem; }
+        .event-card { background: var(--card-bg); padding: 20px; border-radius: 15px; border: 1px solid var(--accent-blue); width: 100%; max-width: 350px; }
+        .event img { width: 100%; border-radius: 10px; margin-top: 10px; }
+
+        /* --- INSTA GRID --- */
+        .insta-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); 
+            gap: 10px; 
+            width: 100%; 
+            max-width: 800px; 
+            padding: 10px;
+        }
+        .insta-post { position: relative; border-radius: 10px; overflow: hidden; cursor: pointer; height: 120px; }
+        .insta-post img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .big-heart { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); color: white; font-size: 3rem; transition: 0.3s; text-shadow: 0 0 10px var(--rose); }
+
+        /* --- REASONS CARDS --- */
+        .reasons-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+        .reason-card { width: 150px; height: 150px; background: linear-gradient(45deg, var(--card-bg), #112240); border-radius: 15px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 10px; border: 1px solid var(--gold); box-shadow: 0 0 15px rgba(255, 215, 0, 0.1); font-size: 0.9rem; transition: 0.3s; }
+        .reason-card:hover { transform: translateY(-10px); background: var(--gold); color: black; font-weight: bold; }
+
+        /* --- VINYL --- */
+        .vinyl-container { width: 200px; height: 200px; border-radius: 50%; background: #111; border: 5px solid var(--card-bg); display: flex; align-items: center; justify-content: center; animation: spin 5s linear infinite; box-shadow: 0 0 30px var(--rose); }
+        .vinyl-inner { width: 80px; height: 80px; background: url('1.jpg'); background-size: cover; border-radius: 50%; border: 30px solid #222; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* --- ENVELOPE --- */
+        .letter-wrap { cursor: pointer; perspective: 1000px; margin-top: 20px; }
+        .envelope { width: 300px; height: 200px; background: var(--rose); position: relative; transition: 1s; display: flex; justify-content: center; }
+        .envelope.open .flap { transform: rotateX(180deg); z-index: 0; }
+        .envelope.open .paper { transform: translateY(-120px); z-index: 2; }
+        .flap { position: absolute; top: 0; width: 0; height: 0; border-left: 150px solid transparent; border-right: 150px solid transparent; border-top: 100px solid #ff5c8d; transform-origin: top; transition: 0.5s; z-index: 4; }
+        .paper { position: absolute; width: 280px; height: 250px; background: white; color: black; padding: 20px; top: 10px; transition: 0.5s; z-index: 1; text-align: center; font-family: 'Dancing Script'; font-size: 1.1rem; display: flex; align-items: center; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+
+        /* --- MUSIC PLAYER --- */
+        .music-bar { 
+            position: fixed; 
+            bottom: 20px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: 90%; 
+            max-width: 400px; 
+            background: rgba(10, 25, 47, 0.95); 
+            border: 1px solid var(--gold); 
+            border-radius: 50px; 
+            padding: 10px 25px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            z-index: 100; 
+            backdrop-filter: blur(10px); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+        }
+        .player-info { display: flex; flex-direction: column; }
+        .song-title { color: var(--gold); font-size: 0.8rem; font-weight: bold; }
+        .controls i { color: white; font-size: 1.5rem; margin-left: 15px; cursor: pointer; transition: 0.2s; }
+        
+        .next-btn { margin-top: 20px; padding: 10px 30px; border: 1px solid var(--accent-blue); color: var(--accent-blue); background: transparent; border-radius: 30px; cursor: pointer; transition: 0.3s; }
+        .next-btn:hover { background: var(--accent-blue); color: black; box-shadow: 0 0 20px var(--accent-blue); }
+
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        /* Media Queries for Mobile */
+        @media (max-width: 576px) {
+            .title { font-size: 2.5rem; }
+            .glow-text { font-size: 2.2rem; }
+            .insta-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="petals-container"></div>
+
+    <section id="page1">
+        <div class="chat-box" data-aos="zoom-in">
+            <div class="chat-header">
+                <div class="chat-dp"></div>
+                <div><h4 style="margin:0; color:white;">Pombala Singoo🥺🥀🦁</h4><small style="color:var(--accent-blue);">Online</small></div>
+            </div>
+            <div class="chat-body" id="chat-body">
+                <div class="typing" id="typing">Typing...</div>
+            </div>
+        </div>
+        <button class="next-btn" onclick="scrollToPage('page2')" id="start-btn" style="display:none; margin-top:30px;">
+            Scroll Here Thangapullayooo 💙
+        </button>
+    </section>
+
+    <section id="page2">
+        <canvas id="heart-canvas"></canvas>
+        <div class="heart-text">
+            <h1 class="glow-text" data-aos="fade-up">I Love You En Paalan</h1>
+            <p style="font-size:1.2rem; color:#aaa;">Sorry for everything da My Kannukutty</p>
+        </div>
+        <i class="fas fa-chevron-down" style="position:absolute; bottom:80px; color:white; animation:bounce 2s infinite;"></i>
+    </section>
+
+    <section id="page3">
+        <h2 class="title" data-aos="fade-down">How it Started 📜</h2>
+        <div class="timeline">
+            <div class="event" data-aos="fade-right">
+                <div class="event-card">
+                    <h3 style="color:var(--gold); margin:0;">Andha Paarvai👀🎀🦁</h3>
+                    <p>Romba Pidiccha Photo idhu 🥺😘 ... </p>
+                    <img src="1.jpg" onerror="this.style.display='none'">
+                </div>
+            </div>
+            <div class="event" data-aos="fade-right" data-aos-delay="200">
+                <div class="event-card">
+                    <h3 style="color:var(--gold); margin:0;">Andha Muththam 😘🥺</h3>
+                    <p>Unna nerla pathu kuduththa head kisses  I froze.</p>
+                    <img src="2.jpg" onerror="this.style.display='none'">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="page4">
+        <h2 class="title" data-aos="fade-up">Crazy Us 🤪</h2>
+        <p class="subtitle">Double Tap the Photos!</p>
+        <div class="insta-grid" id="insta-grid">
+            </div>
+    </section>
+
+    <section id="page5">
+        <h2 class="title" data-aos="zoom-in">The Reasons Why</h2>
+        <p class="subtitle">(Inum Irukku🫠)</p>
+        <div class="reasons-container">
+            <div class="reason-card" data-aos="flip-left">Your Smile</div>
+            <div class="reason-card" data-aos="flip-left" data-aos-delay="100">Your Eyes</div>
+            <div class="reason-card" data-aos="flip-left">Your Kukkoo</div>
+            <div class="reason-card" data-aos="flip-left" data-aos-delay="200">Your Anger</div>
+            <div class="reason-card" data-aos="flip-left" data-aos-delay="300">Your Voice</div>
+            <div class="reason-card" data-aos="flip-left" data-aos-delay="400">The way you care</div>
+        </div>
+    </section>
+
+    <section id="page6">
+        <h2 class="title">My Last 7 Minutes 🥀🥺💎</h2>
+        <div class="vinyl-container">
+            <div class="vinyl-inner"></div>
+        </div>
+        <p style="margin-top:30px; font-style:italic;">"Music connects my soul to yours..."</p>
+    </section>
+
+    <section id="page7">
+        <h2 class="title">Our Universe 🌌</h2>
+        <div style="display:flex; gap:10px; overflow-x:auto; width:100%; padding:20px;">
+            <img src="1.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);">
+            <img src="2.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);">
+            <img src="3.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);">
+            <img src="4.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);">
+            <img src="5.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);">
+             <img src="6.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);"> <img src="7.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);"> <img src="8.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);"> <img src="9.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);"> <img src="10.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);"> <img src="11.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);"> <img src="12.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);"> <img src="13.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);"> <img src="14.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);"> <img src="15.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);"> <img src="16.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);"> <img src="17.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);"> <img src="18.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);"> <img src="19.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);">
+             <img src="20.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);"> <img src="30.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);"> <img src="21.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);"> <img src="22.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);"> <img src="23.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);"> <img src="24.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);"> <img src="25.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);"> <img src="26.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);"> <img src="27.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);"> <img src="28.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);"> <img src="29.jpg" style="height:200px; border-radius:10px; border:2px solid var(--gold);">
+        </div>
+    </section>
+
+    <section id="page8">
+        <h2 class="title">Love Meter 🌡️</h2>
+        <div style="width: 80%; max-width: 300px; height: 30px; background: #333; border-radius: 15px; overflow: hidden; margin-top: 20px;">
+            <div style="width: 0%; height: 100%; background: linear-gradient(90deg, #ff0055, #ffd700); transition: 2s;" id="love-bar"></div>
+        </div>
+        <h3 id="love-percent" style="margin-top: 10px;">0%</h3>
+        <button class="next-btn" onclick="fillLove()">Check Love Paapu</button>
+    </section>
+
+    <section id="page9">
+        <h2 class="title">My Promises 🤞</h2>
+        <ul style="list-style: none; padding: 0; text-align: center; font-size: 1.2rem; line-height: 2;">
+            <li data-aos="fade-up">💙 Always be by your side.</li>
+            <li data-aos="fade-up" data-aos-delay="100">💙 Never let you sleep angry.</li>
+            <li data-aos="fade-up" data-aos-delay="200">💙 Support your dreams.</li>
+            <li data-aos="fade-up" data-aos-delay="300">💙 Love you more every day.</li>
+        </ul>
+    </section>
+
+    <section id="page10" style="background: radial-gradient(circle, #1a0010, #000);">
+        <h2 class="title">For You 🫵💌</h2>
+        <div class="letter-wrap" onclick="openLetter(this)">
+            <div class="envelope">
+                <div class="flap"></div>
+                <div class="paper">
+                    <p style="font-size: 0.9rem;"><b>My Pombala Singoo,</b><br>
+                    Enna neee veruthutta. itz ok. indha paalanum paakuran disturb panna koodathu nu. aana.. adha vidu.. Indha site kjm paaren Da Paalan. Hppy ah irukanm paalan neenga.. adhu podhum. I Love You Paalan - until my last breath - saththiymaa 🥺💔🥀<br>
+                    <b>Happy Advance Valentine's Day!</b><br>
+                    - My Thangapullayooo</p>
+                </div>
+            </div>
+        </div>
+        <p style="margin-top:20px; color:#aaa;">Open Pannunga Thangam</p>
+    </section>
+
+    <div class="music-bar">
+        <div class="player-info">
+            <span class="song-title" id="song-title">Song 1</span>
+            <span style="font-size:0.7rem; color:#8892b0;">My Playlist</span>
+        </div>
+        <div class="controls">
+            <i class="fas fa-backward" onclick="changeSong(-1)"></i>
+            <i class="fas fa-play" id="play-btn" onclick="togglePlay()"></i>
+            <i class="fas fa-forward" onclick="changeSong(1)"></i>
+        </div>
+    </div>
+    <audio id="audio-player"></audio>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // INIT ANIMATIONS
+        AOS.init({ duration: 1000, once: true });
+
+        // --- 1. CHAT LOGIC ---
+        const msgs = ["My Paal Poochii", "Theriyum nee kovama irukka...", "Sorry sonna Podhathu nu theriyum....", "Unakkaaga onnu senjiruken - Owwonna Yosichi...", "Paare ennoda Paalan 🥺 👇"];
+        let msgIdx = 0;
+        function sendMsg() {
+            if(msgIdx < msgs.length) {
+                document.getElementById('typing').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('typing').style.display = 'none';
+                    let div = document.createElement('div');
+                    div.className = 'msg';
+                    div.innerHTML = msgs[msgIdx];
+                    document.getElementById('chat-body').insertBefore(div, document.getElementById('typing'));
+                    setTimeout(() => div.classList.add('visible'), 50);
+                    msgIdx++;
+                    setTimeout(sendMsg, 1500);
+                }, 1000);
+            } else {
+                document.getElementById('start-btn').style.display = 'block';
+            }
+        }
+        setTimeout(sendMsg, 1000);
+
+        function scrollToPage(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- 2. PARTICLE HEART (BLUE/CYAN) ---
+        const canvas = document.getElementById('heart-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        const particles = [];
+        
+        // Heart Formula
+        function getHeartPoint(t) {
+            const scale = 12; 
+            const x = 16 * Math.pow(Math.sin(t), 3);
+            const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+            return { x: x * scale, y: y * scale };
+        }
+
+        function initHeart() {
+            for(let i=0; i<300; i++) {
+                let t = Math.random() * Math.PI * 2;
+                let point = getHeartPoint(t);
+                particles.push({
+                    x: width / 2 + point.x,
+                    y: height / 2 + point.y,
+                    t: t,
+                    size: Math.random() * 2 + 1,
+                    color: `hsl(${180 + Math.random() * 40}, 100%, 70%)` // Cyan/Blue
+                });
+            }
+        }
+
+        function animateHeart() {
+            ctx.fillStyle = 'rgba(5, 10, 20, 0.1)';
+            ctx.fillRect(0,0, width, height);
+            
+            // Draw Ring
+            ctx.save();
+            ctx.translate(width/2, height/2 + 120);
+            ctx.scale(1, 0.2);
+            ctx.beginPath();
+            ctx.arc(0, 0, 80, 0, Math.PI * 2);
+            ctx.strokeStyle = "rgba(0, 243, 255, 0.2)";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.restore();
+
+            particles.forEach(p => {
+                let point = getHeartPoint(p.t);
+                let targetX = width/2 + point.x;
+                let targetY = height/2 + point.y;
+                
+                p.x += (targetX - p.x) * 0.05 + (Math.random()-0.5)*2;
+                p.y += (targetY - p.y) * 0.05 + (Math.random()-0.5)*2;
+                
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+                ctx.fill();
+            });
+            requestAnimationFrame(animateHeart);
+        }
+        initHeart(); animateHeart();
+
+        // --- 3. PHOTO GRID GENERATOR (1 to 30) ---
+        const grid = document.getElementById('insta-grid');
+        for(let i=1; i<=30; i++) { 
+            let div = document.createElement('div');
+            div.className = 'insta-post';
+            div.innerHTML = `<img src="${i}.jpg" onerror="this.src='https://via.placeholder.com/150/0a192f/ffd700?text=${i}'"><div class="big-heart">❤️</div>`;
+            div.ondblclick = function() {
+                let heart = this.querySelector('.big-heart');
+                heart.style.transform = 'translate(-50%, -50%) scale(1)';
+                setTimeout(() => heart.style.transform = 'translate(-50%, -50%) scale(0)', 800);
+            };
+            grid.appendChild(div);
+        }
+
+        // --- 4. LOVE METER ---
+        function fillLove() {
+            document.getElementById('love-bar').style.width = '100%';
+            let p = 0;
+            let int = setInterval(() => {
+                p++; document.getElementById('love-percent').innerText = p + "%";
+                if(p===100) { clearInterval(int); document.getElementById('love-percent').innerText = "100% (Infinity)"; }
+            }, 20);
+        }
+
+        // --- 5. ENVELOPE ---
+        function openLetter(el) {
+            el.querySelector('.envelope').classList.toggle('open');
+        }
+
+        // --- 6. MUSIC PLAYER ---
+        let currSong = 1;
+        const totalSongs = 3; // You have song1.mp3 to song3.mp3
+        const audio = document.getElementById('audio-player');
+
+        function loadSong(idx) {
+            audio.src = `song${idx}.mp3`;
+            document.getElementById('song-title').innerText = `Song ${idx}`;
+            audio.play().catch(e => console.log("User interaction needed"));
+            document.getElementById('play-btn').className = 'fas fa-pause';
+        }
+
+        function togglePlay() {
+            if(audio.paused) { 
+                if(!audio.src) loadSong(currSong);
+                else audio.play();
+                document.getElementById('play-btn').className = 'fas fa-pause';
+            } else { 
+                audio.pause(); 
+                document.getElementById('play-btn').className = 'fas fa-play'; 
+            }
+        }
+
+        function changeSong(dir) {
+            currSong += dir;
+            if(currSong > totalSongs) currSong = 1;
+            if(currSong < 1) currSong = totalSongs;
+            loadSong(currSong);
+        }
+        
+        audio.onended = () => changeSong(1);
+
+        // --- 7. ROSE RAIN ---
+        setInterval(() => {
+            let p = document.createElement('div');
+            p.className = 'petal';
+            p.style.left = Math.random()*100 + 'vw';
+            p.style.width = Math.random()*10+10 + 'px'; p.style.height = p.style.width;
+            p.style.animationDuration = Math.random()*3+3 + 's';
+            document.getElementById('petals-container').appendChild(p);
+            setTimeout(() => p.remove(), 6000);
+        }, 500);
+
+    </script>
+</body>
+</html>
